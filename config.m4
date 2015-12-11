@@ -13,9 +13,9 @@ dnl [  --with-mqyog             Include mqyog support])
 
 dnl Otherwise use enable:
 
-dnl PHP_ARG_ENABLE(mqyog, whether to enable mqyog support,
+ PHP_ARG_ENABLE(mqyog, whether to enable mqyog support,
 dnl Make sure that the comment is aligned:
-dnl [  --enable-mqyog           Enable mqyog support])
+ [  --enable-mqyog           Enable mqyog support])
 
 if test "$PHP_MQYOG" != "no"; then
   dnl Write more examples of tests here...
@@ -49,12 +49,12 @@ if test "$PHP_MQYOG" != "no"; then
 
   dnl PHP_CHECK_LIBRARY($LIBNAME,$LIBSYMBOL,
   dnl [
-  dnl   PHP_ADD_LIBRARY_WITH_PATH($LIBNAME, $MQYOG_DIR/$PHP_LIBDIR, MQYOG_SHARED_LIBADD)
+  dnl   PHP_ADD_LIBRARY_WITH_PATH($LIBNAME, $MQYOG_DIR/lib, MQYOG_SHARED_LIBADD)
   dnl   AC_DEFINE(HAVE_MQYOGLIB,1,[ ])
   dnl ],[
   dnl   AC_MSG_ERROR([wrong mqyog lib version or lib not found])
   dnl ],[
-  dnl   -L$MQYOG_DIR/$PHP_LIBDIR -lm
+  dnl   -L$MQYOG_DIR/lib -lm
   dnl ])
   dnl
   dnl PHP_SUBST(MQYOG_SHARED_LIBADD)

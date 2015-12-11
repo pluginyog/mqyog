@@ -2,7 +2,7 @@
   +----------------------------------------------------------------------+
   | PHP Version 5                                                        |
   +----------------------------------------------------------------------+
-  | Copyright (c) 1997-2015 The PHP Group                                |
+  | Copyright (c) 1997-2007 The PHP Group                                |
   +----------------------------------------------------------------------+
   | This source file is subject to version 3.01 of the PHP license,      |
   | that is bundled with this package in the file LICENSE, and is        |
@@ -16,7 +16,7 @@
   +----------------------------------------------------------------------+
 */
 
-/* $Id$ */
+/* $Id: header 226204 2007-01-01 19:32:10Z iliaa $ */
 
 #ifndef PHP_MQYOG_H
 #define PHP_MQYOG_H
@@ -24,29 +24,54 @@
 extern zend_module_entry mqyog_module_entry;
 #define phpext_mqyog_ptr &mqyog_module_entry
 
-#define PHP_MQYOG_VERSION "0.1.0" /* Replace with version number for your extension */
-
 #ifdef PHP_WIN32
-#	define PHP_MQYOG_API __declspec(dllexport)
-#elif defined(__GNUC__) && __GNUC__ >= 4
-#	define PHP_MQYOG_API __attribute__ ((visibility("default")))
+#define PHP_MQYOG_API __declspec(dllexport)
 #else
-#	define PHP_MQYOG_API
+#define PHP_MQYOG_API
 #endif
 
 #ifdef ZTS
 #include "TSRM.h"
 #endif
 
-/* 
-  	Declare any global variables you may need between the BEGIN
-	and END macros here:     
+typedef struct mqyog {
+    char *hostname;
+    int hostname_len;
+    int response_code;
+    int response_pos;
+    char *response_body;
+} mqyog_t;
+
+#define MQYOG_RES_NAME "Httpsqs Connection"
+
+int get_response(mqyog_t *mqyog, char *query, int query_len TSRMLS_DC);
+int h_strcmp(const char *a, const char *b);
+int get_response_code(char *response_body);
+int get_responses(mqyog_t *mqyog,char *query, int query_len TSRMLS_DC);
+
+PHP_MINIT_FUNCTION(mqyog);
+PHP_MSHUTDOWN_FUNCTION(mqyog);
+PHP_RINIT_FUNCTION(mqyog);
+PHP_RSHUTDOWN_FUNCTION(mqyog);
+PHP_MINFO_FUNCTION(mqyog);
+
+PHP_FUNCTION(mqyog_connect);
+PHP_FUNCTION(mqyog_get);
+PHP_FUNCTION(mqyog_put);
+PHP_FUNCTION(mqyog_status);
+PHP_FUNCTION(mqyog_view);
+PHP_FUNCTION(mqyog_reset);
+PHP_FUNCTION(mqyog_maxqueue);
+PHP_FUNCTION(mqyog_synctime);
+
+PHP_METHOD(Httpsqs, __construct);
 
 ZEND_BEGIN_MODULE_GLOBALS(mqyog)
-	long  global_value;
-	char *global_string;
+long default_port;
+char *default_charset;
+char *default_host;
+long timeout;
 ZEND_END_MODULE_GLOBALS(mqyog)
-*/
 
 /* In every utility function you add that needs to use variables 
    in php_mqyog_globals, call TSRMLS_FETCH(); after declaring other 

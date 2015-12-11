@@ -1,21 +1,14 @@
 <?php
-$br = (php_sapi_name() == "cli")? "":"<br>";
 
-if(!extension_loaded('mqyog')) {
-	dl('mqyog.' . PHP_SHLIB_SUFFIX);
-}
-$module = 'mqyog';
-$functions = get_extension_funcs($module);
-echo "Functions available in the test extension:$br\n";
-foreach($functions as $func) {
-    echo $func."$br\n";
-}
-echo "$br\n";
-$function = 'confirm_' . $module . '_compiled';
-if (extension_loaded($module)) {
-	$str = $function($module);
-} else {
-	$str = "Module $module is not compiled into PHP";
-}
-echo "$str\n";
-?>
+
+$hr = mqyog_connect("pi.noyog.com", 9091);
+var_dump($hr);
+$content = mqyog_get($hr, "testQueue", true, "UTF-8");
+var_dump($content);
+$putRes = mqyog_put($hr, "testQueue","11");var_dump($putRes);
+$status = mqyog_status($hr, "testQueue", true, "UTF-8");
+var_dump($status);
+#$posData = mqyog_view($hr, "testQueue", 1, "UTF-8");
+#var_dump($posData);
+#$maxqueueRes = mqyog_maxqueue($hr, "testQueue", 9091);
+#var_dump($maxqueueRes);
