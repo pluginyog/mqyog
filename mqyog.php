@@ -1,7 +1,7 @@
 <?php
 
 
-$hr = mqyog_connect("pi.noyog.com", 9091);
+$hr = mqyog_connect("127.0.0.1", 9091);
 var_dump($hr);
 $content = mqyog_get($hr, "testQueue", true, "UTF-8");
 var_dump($content);
